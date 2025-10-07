@@ -120,6 +120,6 @@ public class CategoriaController : Controller
             registroSelecionado.Despesas
         );
 
-        return View(detalhesVM);
+        return View(detalhesVM); 
     }
 }
