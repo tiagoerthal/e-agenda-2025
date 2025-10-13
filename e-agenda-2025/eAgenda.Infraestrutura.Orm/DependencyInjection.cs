@@ -2,9 +2,12 @@
 using eAgenda.Dominio.ModuloCompromisso;
 using eAgenda.Dominio.ModuloContato;
 using eAgenda.Dominio.ModuloDespesa;
+using eAgenda.Dominio.ModuloTarefa;
 using eAgenda.Infraestrutura.Orm.ModuloCategoria;
 using eAgenda.Infraestrutura.Orm.ModuloCompromisso;
 using eAgenda.Infraestrutura.Orm.ModuloContato;
+using eAgenda.Infraestrutura.Orm.ModuloDespesa;
+using eAgenda.Infraestrutura.Orm.ModuloTarefa;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -28,7 +31,8 @@ public static class DependencyInjection
         services.AddScoped<IRepositorioContato, RepositorioContatoEmOrm>();
         services.AddScoped<IRepositorioCompromisso, RepositorioCompromissoEmOrm>();
         services.AddScoped<IRepositorioCategoria, RepositorioCategoriaEmOrm>();
-        //services.AddScoped<IRepositorioDespesa, RepositorioDespesaEmOrm>();
+        services.AddScoped<IRepositorioDespesa, RepositorioDespesaEmOrm>();
+        services.AddScoped<IRepositorioTarefa, RepositorioTarefaEmOrm>();
 
         return services;
     }
