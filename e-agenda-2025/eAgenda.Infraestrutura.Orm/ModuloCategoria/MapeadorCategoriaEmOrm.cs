@@ -20,4 +20,5 @@ internal class MapeadorCategoriaEmOrm : IEntityTypeConfiguration<Categoria>
                .WithMany(d => d.Categorias)
                .UsingEntity(e => e.ToTable("TBCategoria_TBDespesa"));
     }
+    
 }

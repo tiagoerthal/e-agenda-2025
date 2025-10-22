@@ -12,8 +12,8 @@ using eAgenda.Infraestrutura.Orm;
 namespace eAgenda.Infraestrutura.Orm.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251013190207_Add_TBTarefa_TBItemTarefa")]
-    partial class Add_TBTarefa_TBItemTarefa
+    [Migration("20251021235809_Add_TbUnica")]
+    partial class Add_TbUnica
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
