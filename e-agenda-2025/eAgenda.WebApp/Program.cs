@@ -19,9 +19,11 @@ public class Program
         app.ApplyMigrations();
 
         // Configure the HTTP request pipeline.
+        app.UseDeveloperExceptionPage();
+
         if (!app.Environment.IsDevelopment())
         {
-            app.UseExceptionHandler("/Home/Erro");
+           // app.UseExceptionHandler("/Home/Erro");
             app.UseHsts();
         }
 
