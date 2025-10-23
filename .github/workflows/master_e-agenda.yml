@@ -1,7 +1,7 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy ASP.Net Core app to Azure Web App - E-agenda-2025-Tiago
+name: Build and deploy ASP.Net Core app to Azure Web App - E-Agenda
 
 on:
   push:
@@ -13,7 +13,7 @@ jobs:
   build:
     runs-on: windows-latest
     permissions:
-      contents: read # Required for actions/checkout
+      contents: read #This is required for actions/checkout
 
     steps:
       - uses: actions/checkout@v4
@@ -24,10 +24,10 @@ jobs:
           dotnet-version: '8.x'
 
       - name: Build with dotnet
-        run: dotnet build E-agenda-2025-Tiago.sln --configuration Release
+        run: dotnet build e-agenda-2025 --configuration Release
 
       - name: dotnet publish
-        run: dotnet publish E-agenda-2025-Tiago.sln -c Release -o "${{env.DOTNET_ROOT}}/myapp"
+        run: dotnet publish e-agenda-2025 -c Release -o "${{env.DOTNET_ROOT}}/myapp"
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
@@ -39,8 +39,8 @@ jobs:
     runs-on: windows-latest
     needs: build
     permissions:
-      id-token: write
-      contents: read
+      id-token: write #This is required for requesting the JWT
+      contents: read #This is required for actions/checkout
 
     steps:
       - name: Download artifact from build job
@@ -51,15 +51,15 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_1861CA08F0C8429689D639BC7D7F0886 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_6E99199A52014B7FACF665D6F8547F26 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_F3C0EBE017414B91A72809A737214468 }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_2595DC29928E4541B352AA3ADE0E16FE }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_A7442127EBD04A868EBF1CDA436114BB }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_4ABC41D8A25D4BB197E35ADFB2C78586 }}
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'E-agenda-2025-Tiago'
+          app-name: 'E-Agenda'
           slot-name: 'Production'
           package: .
 
