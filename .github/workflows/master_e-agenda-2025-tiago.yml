@@ -24,10 +24,10 @@ jobs:
           dotnet-version: '8.x'
 
       - name: Build with dotnet
-        run: dotnet build E-agenda-2025-Tiago.sln --configuration Release
+        run: dotnet build e-agenda-2025 --configuration Release
 
       - name: dotnet publish
-        run: dotnet publish E-agenda-2025-Tiago.sln -c Release -o "${{env.DOTNET_ROOT}}/myapp"
+        run: dotnet publish e-agenda-2025 -c Release -o "${{env.DOTNET_ROOT}}/myapp"
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
@@ -64,3 +64,4 @@ jobs:
           package: .
 
           
+
