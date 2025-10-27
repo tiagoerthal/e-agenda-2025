@@ -48,6 +48,7 @@ namespace eAgenda.Testes.Integracao.ModuloContato
             // Asserção
             Assert.AreNotEqual(contato, contatoSelecionado);
         }
+
         [TestMethod]
         public void Deve_EditarRegistro_ComSucesso()
         {
@@ -72,11 +73,12 @@ namespace eAgenda.Testes.Integracao.ModuloContato
             );
 
             // Ação
-            repositorioContato.EditarRegistro(contatoOriginal.Id, contatoEditado);
+            bool registroEditado = repositorioContato.EditarRegistro(contatoOriginal.Id, contatoEditado);
 
             // Asserção
             Contato? contatoSelecionado = repositorioContato.SelecionarRegistroPorId(contatoOriginal.Id);
 
+            Assert.IsTrue(registroEditado);
             Assert.AreEqual(contatoOriginal, contatoSelecionado);
         }
 
@@ -95,11 +97,12 @@ namespace eAgenda.Testes.Integracao.ModuloContato
             repositorioContato.CadastrarRegistro(contatoOriginal);
 
             // Ação
-            repositorioContato.ExcluirRegistro(contatoOriginal.Id);
+            bool registroExcluido = repositorioContato.ExcluirRegistro(contatoOriginal.Id);
 
             // Asserção
             Contato? contatoSelecionado = repositorioContato.SelecionarRegistroPorId(contatoOriginal.Id);
 
+            Assert.IsTrue(registroExcluido);
             Assert.IsNull(contatoSelecionado);
         }
     }
