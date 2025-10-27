@@ -1,7 +1,7 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy ASP.Net Core app to Azure Web App - E-Agenda
+name: Build and deploy ASP.Net Core app to Azure Web App - e-agenda
 
 on:
   push:
@@ -51,15 +51,15 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_2595DC29928E4541B352AA3ADE0E16FE }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_A7442127EBD04A868EBF1CDA436114BB }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_4ABC41D8A25D4BB197E35ADFB2C78586 }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_5514AD3960F045BCB61BCC0D21EBC206 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_32DB41CBEDBA4464A3E11AFD969FE421 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_B79149EF19124F6795173046F74DA58C }}
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'E-Agenda'
+          app-name: 'e-agenda'
           slot-name: 'Production'
           package: .
 
