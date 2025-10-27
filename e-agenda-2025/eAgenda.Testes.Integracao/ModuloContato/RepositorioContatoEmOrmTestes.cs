@@ -1,125 +1,107 @@
 ﻿using eAgenda.Dominio.ModuloContato;
-using eAgenda.Infraestrutura.Orm;
-using eAgenda.Infraestrutura.Orm.ModuloContato;
-using Microsoft.EntityFrameworkCore;
+using eAgenda.Testes.Integracao.Compartilhado;
 
-namespace eAgenda.Testes.Integracao.ModuloContato
+namespace eAgenda.Testes.Integracao.ModuloContato;
+
+[TestClass]
+[TestCategory("Testes de Integração de Contato")]
+public sealed class RepositorioContatoEmOrmTestes : TestFixture
 {
-    [TestClass]
-    public sealed class RepositorioContatoEmOrmTestes
+    [TestMethod]
+    public void Deve_CadastrarRegistro_ComSucesso()
     {
-        private static readonly AppDbContext dbContext = AppDbContextFactory.CriarDbContext("Data Source=(LocalDB)\\MSSQLLocalDB;Initial Catalog=E-agendaTesteDb;Integrated Security=True");
-        private static readonly RepositorioContatoEmOrm repositorioContato = new RepositorioContatoEmOrm(dbContext);
+        // Arranjo
+        Contato contato = new Contato(
+            "Juninho Testes",
+            "(49) 98533-3334",
+            "testes@academiadoprogramador.net",
+            "Academia do Programador",
+            "Testador"
+        );
 
-        [TestInitialize]
-        public void ConfigurarTestes()
-        {
-            dbContext.Database.EnsureCreated();
+        // Ação
+        repositorioContato?.CadastrarRegistro(contato);
 
-            dbContext.Tarefas.RemoveRange(dbContext.Tarefas);
-            dbContext.Despesas.RemoveRange(dbContext.Despesas);
-            dbContext.Categorias.RemoveRange(dbContext.Categorias);
-            dbContext.Compromissos.RemoveRange(dbContext.Compromissos);
-            dbContext.Contatos.RemoveRange(dbContext.Contatos);
+        Contato? contatoSelecionado = repositorioContato?.SelecionarRegistroPorId(contato.Id);
 
-            dbContext.SaveChanges();
-        }
-        [TestMethod]
-        public void Deve_CadastrarRegistro_ComSucesso()
-        {
-            // Arranjo
-            Contato contato = new Contato(
-                "Juninho Testes 2",
-                "(49) 98533-3334",
-                "testes@academiadoprogramador.net",
-                "Academia do Programador",
-                "Testador"
-            );
+        // Asserção
+        Assert.AreEqual(contato, contatoSelecionado);
+    }
 
-            // Ação
-            repositorioContato.CadastrarRegistro(contato);
+    [TestMethod]
+    public void Deve_RetornarNulo_Ao_SelecionarRegistroPorId_ComIdErrado()
+    {
+        // Arranjo
+        Contato contato = new Contato(
+            "Juninho Testes 2",
+            "(49) 98533-3334",
+            "testes@academiadoprogramador.net",
+            "Academia do Programador",
+            "Testador"
+        );
 
-            Contato? contatoSelecionado = repositorioContato.SelecionarRegistroPorId(contato.Id);
+        repositorioContato?.CadastrarRegistro(contato);
 
-            // Asserção
-            Assert.AreEqual(contato, contatoSelecionado);
-        }
+        // Ação
+        Contato? contatoSelecionado = repositorioContato?.SelecionarRegistroPorId(Guid.NewGuid());
 
-        [TestMethod]
-        public void Deve_RetornarNulo_Ao_SelecionarRegistroPorId_ComIdErrado()
-        {
-            // Arranjo
-            Contato contato = new Contato(
-                "Juninho Testes 2",
-                "(49) 98533-3334",
-                "testes@academiadoprogramador.net",
-                "Academia do Programador",
-                "Testador"
-            );
+        // Asserção
+        Assert.AreNotEqual(contato, contatoSelecionado);
+    }
 
-            repositorioContato.CadastrarRegistro(contato);
+    [TestMethod]
+    public void Deve_EditarRegistro_ComSucesso()
+    {
+        // Arranjo
+        Contato contatoOriginal = new Contato(
+            "Juninho Testes",
+            "(49) 98533-3334",
+            "testes@academiadoprogramador.net",
+            "Academia do Programador",
+            "Testador"
+        );
 
-            // Ação
-            Contato? contatoSelecionado = repositorioContato.SelecionarRegistroPorId(Guid.NewGuid());
+        repositorioContato?.CadastrarRegistro(contatoOriginal);
 
-            // Asserção
-            Assert.AreNotEqual(contato, contatoSelecionado);
-        }
+        Contato contatoEditado = new Contato(
+            "Pedrinho do Código",
+            "(49) 99452-5234",
+            "pedrinho_codigos@academiadoprogramador.net",
+            "Academia do Programador",
+            "Desenvolvedor"
+        );
 
-        [TestMethod]
-        public void Deve_EditarRegistro_ComSucesso()
-        {
-            // Arranjo
-            Contato contatoOriginal = new Contato(
-                "Juninho Testes",
-                "(49) 98533-3334",
-                "testes@academiadoprogramador.net",
-                "Academia do Programador",
-                "Testador"
-            );
+        // Ação
+        bool? registroEditado = repositorioContato?.EditarRegistro(contatoOriginal.Id, contatoEditado);
 
-            repositorioContato.CadastrarRegistro(contatoOriginal);
+        // Asserção
+        Contato? contatoSelecionado = repositorioContato?.SelecionarRegistroPorId(contatoOriginal.Id);
 
-            Contato contatoEditado = new Contato(
-                "Pedrinho do Código",
-                "(49) 99452-5234",
-                "pedrinho_codigos@academiadoprogramador.net",
-                "Academia do Programador",
-                "Desenvolvedor"
-            );
+        Assert.IsTrue(registroEditado);
+        Assert.AreEqual(contatoOriginal, contatoSelecionado);
+    }
 
-            // Ação
-            bool registroEditado = repositorioContato.EditarRegistro(contatoOriginal.Id, contatoEditado);
+    [TestMethod]
+    public void Deve_ExcluirRegistro_ComSucesso()
+    {
+        // Arranjo
+        Contato contatoOriginal = new Contato(
+            "Juninho Testes",
+            "(49) 98533-3334",
+            "testes@academiadoprogramador.net",
+            "Academia do Programador",
+            "Testador"
+        );
 
-            // Asserção
-            Contato? contatoSelecionado = repositorioContato.SelecionarRegistroPorId(contatoOriginal.Id);
+        repositorioContato?.CadastrarRegistro(contatoOriginal);
 
-            Assert.IsTrue(registroEditado);
-            Assert.AreEqual(contatoOriginal, contatoSelecionado);
-        }
+        // Ação
+        bool? registroExcluido = repositorioContato?.ExcluirRegistro(contatoOriginal.Id);
 
-        [TestMethod]
-        public void Deve_ExcluirRegistro_ComSucesso()
-        {
-            // Arranjo
-            Contato contatoOriginal = new Contato(
-                "Juninho Testes",
-                "(49) 98533-3334",
-                "testes@academiadoprogramador.net",
-                "Academia do Programador",
-                "Testador"
-            );
+        // Asserção
+        Contato? contatoSelecionado = repositorioContato?.SelecionarRegistroPorId(contatoOriginal.Id);
 
-            repositorioContato.CadastrarRegistro(contatoOriginal);
-
-            // Ação
-            bool registroExcluido = repositorioContato.ExcluirRegistro(contatoOriginal.Id);
-
-            // Asserção
-            Contato? contatoSelecionado = repositorioContato.SelecionarRegistroPorId(contatoOriginal.Id);
-
-            Assert.IsTrue(registroExcluido);
-            Assert.IsNull(contatoSelecionado);
-        }
+        Assert.IsTrue(registroExcluido);
+        Assert.IsNull(contatoSelecionado);
     }
 }
