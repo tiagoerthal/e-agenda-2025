@@ -38,7 +38,7 @@ jobs: # Compila o projeto e o publica em uma pasta raíz
   migrate:
     runs-on: windows-latest
     needs: build
-     permissions:
+    permissions:
       contents: read
 
     steps:
@@ -87,5 +87,6 @@ jobs: # Compila o projeto e o publica em uma pasta raíz
           package: .
 
           
+
 
 
