@@ -18,7 +18,10 @@ public class Program
 
         var app = builder.Build();
 
-        app.ApplyMigrations();
+        if (app.Environment.IsDevelopment())
+        {
+            app.ApplyMigrations();
+        }  
 
         // Configure the HTTP request pipeline.
         app.UseDeveloperExceptionPage();
