@@ -54,7 +54,7 @@ jobs: # Compila o projeto e o publica em uma pasta raíz
         run: dotnet tool install --global dotnet-ef --version 9.0.11
 
       - name: Apply EF Core migrations
-        run: dotnet ef database update --project ./eAgenda.Infraestrutura.Orm --startup-project ./eAgenda.WebApp
+        run: dotnet ef database update --project ./e-agenda-2025/eAgenda.Infraestrutura.Orm --startup-project ./e-agenda-2025/eAgenda.WebApp
         env:
           SQL_CONNECTION_STRING: ${{ secrets.SQL_CONNECTION_STRING }}
 
@@ -87,6 +87,7 @@ jobs: # Compila o projeto e o publica em uma pasta raíz
           package: .
 
           
+
 
 
 
