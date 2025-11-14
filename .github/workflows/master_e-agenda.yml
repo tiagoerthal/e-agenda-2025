@@ -51,7 +51,7 @@ jobs: # Compila o projeto e o publica em uma pasta raíz
           dotnet-version: '8.x'
 
       - name: Install EF Core CLI
-        run: dotnet tool install --global dotnet-ef --version 8.0.22
+        run: dotnet tool install --global dotnet-ef --version 9.0.11
 
       - name: Apply EF Core migrations
         run: dotnet ef database update --project ./eAgenda.Infraestrutura.Orm --startup-project ./eAgenda.WebApp
@@ -87,6 +87,7 @@ jobs: # Compila o projeto e o publica em uma pasta raíz
           package: .
 
           
+
 
 
 
