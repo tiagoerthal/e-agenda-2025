@@ -34,7 +34,7 @@ jobs: # Compila o projeto e o publica em uma pasta raíz
         with:
           name: .net-app
           path: ${{env.DOTNET_ROOT}}/myapp
-
+          
   test:
     runs-on: windows-latest
     needs: build
@@ -42,17 +42,17 @@ jobs: # Compila o projeto e o publica em uma pasta raíz
       contents: read
 
     steps:
-    - uses: actions/checkout@v4
-  
-    - name: Set up .NET Core
-      uses : actions/setup-dotnet@v4
-      with:
-        dotnet-version: '8.x'
-
-    - name: Run tests
-      run: dotnet test e-agenda-2025 --configuration Release --verbosity normal
-      env:
-        ASPNET_ENVIRONMENT: "STAGING"
+      - uses: actions/checkout@v4
+     
+      - name: Set up .NET Core
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.x'
+    
+      - name: Run tests
+        run: dotnet test e-agenda-2025 --configuration Release --verbosity normal
+        env:
+          ASPNET_ENVIRONMENT: "STAGING"
 
   migrate:
     runs-on: windows-latest
@@ -70,16 +70,16 @@ jobs: # Compila o projeto e o publica em uma pasta raíz
           dotnet-version: '8.x'
 
       - name: Install EF Core CLI
-        run: dotnet tool install --global dotnet-ef
+        run: dotnet tool install --global dotnet-ef --version 9.0.11
 
       - name: Apply EF Core migrations
-        run: dotnet ef database update --project ./eAgenda.Infraestrutura.Orm --startup-project ./eAgenda.WebApp
+        run: dotnet ef database update --project ./e-agenda-2025/eAgenda.Infraestrutura.Orm --startup-project ./e-agenda-2025/eAgenda.WebApp
         env:
           SQL_CONNECTION_STRING: ${{ secrets.SQL_CONNECTION_STRING }}
 
   deploy:
     runs-on: windows-latest
-    needs: [build, test, migrate] 
+    needs: [build, test, migrate]
     permissions:
       id-token: write #This is required for requesting the JWT
       contents: read #This is required for actions/checkout
@@ -106,5 +106,11 @@ jobs: # Compila o projeto e o publica em uma pasta raíz
           package: .
 
           
+
+
+
+
+
+
 
 
