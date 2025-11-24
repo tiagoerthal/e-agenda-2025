@@ -50,7 +50,7 @@ jobs: # Compila o projeto e o publica em uma pasta raíz
           dotnet-version: '8.x'
     
       - name: Run tests
-        run: dotnet test --configuration Release --verbosity normal
+        run: dotnet test e-agenda-2025 --configuration Release --verbosity normal
         env:
           ASPNET_ENVIRONMENT: "STAGING"
 
@@ -106,6 +106,7 @@ jobs: # Compila o projeto e o publica em uma pasta raíz
           package: .
 
           
+
 
 
 
