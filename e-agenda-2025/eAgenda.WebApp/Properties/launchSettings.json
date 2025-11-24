@@ -1,13 +1,24 @@
 ﻿{
-  "profiles": {
-    "https": {
-      "commandName": "Project",
-      "dotnetRunMessages": true,
-      "launchBrowser": false,
-      "applicationUrl": "https://localhost:7270;http://localhost:5145",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+    "profiles": {
+        "https": {
+            "commandName": "Project",
+            "dotnetRunMessages": true,
+            "launchBrowser": false,
+            "applicationUrl": "https://localhost:7270;http://localhost:5145",
+            "environmentVariables": {
+                "ASPNETCORE_ENVIRONMENT": "Development",
+                "SQL_CONNECTION_STRING": "Data Source=(LocalDB)\\MSSQLLocalDB;Initial Catalog=E-agendaDb;Integrated Security=True"
+            }
+        },
+        "https [e2e]": {
+            "commandName": "Project",
+            "dotnetRunMessages": true,
+            "launchBrowser": false,
+            "applicationUrl": "https://localhost:7270;http://localhost:5145",
+            "environmentVariables": {
+                "ASPNETCORE_ENVIRONMENT": "Testing",
+                "SQL_CONNECTION_STRING": "Data Source=(LocalDB)\\MSSQLLocalDB;Initial Catalog=E-agendaTestDb;Integrated Security=True"
+            }
+        }
     }
-  }
 }
