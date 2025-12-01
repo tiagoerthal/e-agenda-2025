@@ -12,24 +12,27 @@ public sealed class AutenticacaoInterfaceTestes : TestFixture
     {
         webDriver?.Navigate().GoToUrl(Path.Combine(enderecoBase, "autenticacao", "registro"));
 
-        webDriver?
-            .FindElement(By.CssSelector("input[data-se=inputEmail]"))
+        webDriverWait?
+            .Until(d => d.FindElement(By.CssSelector("input[data-se=inputEmail]")))
             .SendKeys("teste@gmail.com");
 
-        webDriver?
-            .FindElement(By.CssSelector("input[data-se=inputSenha]"))
+        webDriverWait?
+            .Until(d => d.FindElement(By.CssSelector("input[data-se=inputSenha]")))
             .SendKeys("Teste@123");
 
-        webDriver?
-            .FindElement(By.CssSelector("input[data-se=inputConfirmarSenha]"))
+        webDriverWait?
+            .Until(d => d.FindElement(By.CssSelector("input[data-se=inputConfirmarSenha]")))
             .SendKeys("Teste@123");
 
-        webDriver?
-            .FindElement(By.CssSelector("button[data-se=btnConfirmar]"))
-            .Click();
+        webDriverWait?
+           .Until(d => d.FindElement(By.CssSelector("button[data-se=btnConfirmar]")))
+           .Click();
 
-        Assert.IsTrue(webDriver?.PageSource.Contains("Página Inicial"));
-        Assert.IsTrue(webDriver?.PageSource.Contains("teste@gmail.com"));
+        webDriverWait?
+            .Until(d => d.PageSource.Contains("Página Inicial"));
+
+        webDriverWait?
+            .Until(d => d.PageSource.Contains("teste@gmail.com"));
     }
 
     [TestMethod]
@@ -38,39 +41,41 @@ public sealed class AutenticacaoInterfaceTestes : TestFixture
         // Arranjo
         webDriver?.Navigate().GoToUrl(Path.Combine(enderecoBase, "autenticacao", "registro"));
 
-        webDriver?
-            .FindElement(By.CssSelector("input[data-se=inputEmail]"))
+        webDriverWait?
+            .Until(d => d.FindElement(By.CssSelector("input[data-se=inputEmail]")))
             .SendKeys("teste@gmail.com");
 
-        webDriver?
-            .FindElement(By.CssSelector("input[data-se=inputSenha]"))
-            .SendKeys("Teste@123");
+        webDriverWait?
+            .Until(d => d.FindElement(By.CssSelector("input[data-se=inputSenha]")))
+            .SendKeys("SenhaSuperForteTeste@536");
 
-        webDriver?
-            .FindElement(By.CssSelector("input[data-se=inputConfirmarSenha]"))
-            .SendKeys("Teste@123");
+        webDriverWait?
+            .Until(d => d.FindElement(By.CssSelector("input[data-se=inputConfirmarSenha]")))
+            .SendKeys("SenhaSuperForteTeste@536");
 
-        webDriver?
-            .FindElement(By.CssSelector("button[data-se=btnConfirmar]"))
+        webDriverWait?
+            .Until(d => d.FindElement(By.CssSelector("button[data-se=btnConfirmar]")))
             .Click();
+
+        webDriverWait?
+           .Until(d => d.Title.Contains("Página Inicial"));
 
         webDriver?.Navigate().GoToUrl(Path.Combine(enderecoBase, "autenticacao", "login"));
 
         // Ação
-        webDriver?
-           .FindElement(By.CssSelector("input[data-se=inputEmail]"))
-           .SendKeys("teste@gmail.com");
+        webDriverWait?
+            .Until(d => d.FindElement(By.CssSelector("input[data-se=inputEmail]"))).SendKeys("teste@gmail.com");
 
-        webDriver?
-            .FindElement(By.CssSelector("input[data-se=inputSenha]"))
-            .SendKeys("Teste@123");
+        webDriverWait?
+            .Until(d => d.FindElement(By.CssSelector("input[data-se=inputSenha]"))).SendKeys("SenhaSuperForteTeste@536");
 
-        webDriver?
-            .FindElement(By.CssSelector("button[data-se=btnConfirmar]"))
-            .Click();
+        webDriverWait?
+            .Until(d => d.FindElement(By.CssSelector("button[data-se=btnConfirmar]"))).Click();
 
-        // Asserção
-        Assert.IsTrue(webDriver?.PageSource.Contains("Página Inicial"));
-        Assert.IsTrue(webDriver?.PageSource.Contains("teste@gmail.com"));
+        webDriverWait?
+           .Until(d => d.Title.Contains("Página Inicial"));
+
+        webDriverWait?
+            .Until(d => d.PageSource.Contains("teste@gmail.com"));
     }
 }

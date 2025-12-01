@@ -1,6 +1,7 @@
 ﻿using eAgenda.Infraestrutura.Orm;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Support.UI;
 
 namespace eAgenda.Testes.Interface.Compartilhado;
 
@@ -8,13 +9,14 @@ namespace eAgenda.Testes.Interface.Compartilhado;
 public abstract class TestFixture
 {
     protected static WebDriver? webDriver;
+    protected static WebDriverWait? webDriverWait;
     protected static AppDbContext? dbContext;
     protected string enderecoBase = "https://localhost:9001";
 
     [AssemblyInitialize]
     public static void ConfigurarTestFixture(TestContext testContext)
     {
-        dbContext = AppDbContextFactory.CriarDbContext("Data Source=(LocalDB)\\MSSQLLocalDB;Initial Catalog=eAgendaBackendTestDb;Integrated Security=True");
+        dbContext = AppDbContextFactory.CriarDbContext("Data Source=(LocalDB)\\MSSQLLocalDB;Initial Catalog=E-agendaDb;Integrated Security=True");
 
         webDriver = new ChromeDriver();
     }
@@ -22,10 +24,12 @@ public abstract class TestFixture
     [AssemblyCleanup]
     public static void LimparAmbiente()
     {
-        if (webDriver is null) return;
+        if (webDriver is null || dbContext is null) return;
 
         webDriver.Quit();
         webDriver.Dispose();
+
+        dbContext.Database.EnsureDeleted();
     }
 
     [TestInitialize]
@@ -51,5 +55,7 @@ public abstract class TestFixture
         dbContext.SaveChanges();
 
         webDriver.Manage().Cookies.DeleteAllCookies();
+
+        webDriverWait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(5));
     }
 }
